@@ -1,0 +1,65 @@
+.simple-featured-tournament {
+  height: 250px;
+  background-color: var(--c2);
+  border-radius: 20px;
+}
+
+.simple-featured-tournament .image-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+}
+
+.simple-featured-tournament img {
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  object-fit: cover;
+}
+
+.simple-featured-tournament .status-label {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.simple-featured-tournament .status-label.open {
+  background-color: green;
+}
+
+.simple-featured-tournament .status-label.closed {
+  background-color: red;
+}
+
+.simple-featured-tournament .content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.simple-featured-tournament .fotter {
+  display: flex;
+  gap: 5px;
+}
+
+.simple-featured-tournament .name {
+  font-weight: 600;
+  font-size: 1.2em;
+  margin-right: 5px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.simple-featured-tournament span {
+  color: var(--text2);
+}
+
+.slick-slide > div {
+  margin: 0 10px;
+}

@@ -24,7 +24,7 @@ class DataManager {
 
     fun saveData(system: System) {
         saveToJson(usersFile, system.getAllUsers().toTypedArray())
-        saveToJson(tournamentsFile, system.getAllTournaments().toTypedArray())
+        saveToJson(tournamentsFile, system.tournaments.toTypedArray())
     }
 
     fun loadMetadata(idGenerator: IdGenerator) {

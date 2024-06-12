@@ -1,0 +1,25 @@
+.user-stats {
+  margin-top: 30px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: var(--c2);
+  margin-bottom: 20px;
+}
+
+.user-stats h2 {
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.user-stats p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.user-stats .highlight {
+  color: var(--accent);
+}

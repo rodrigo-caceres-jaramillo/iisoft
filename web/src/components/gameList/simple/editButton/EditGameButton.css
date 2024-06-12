@@ -1,0 +1,14 @@
+.edit-game-button {
+  background-color: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  margin-left: 5px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-game-button:hover {
+  background-color: var(--c2);
+}

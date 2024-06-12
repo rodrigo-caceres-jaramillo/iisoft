@@ -1,5 +1,5 @@
 #main-menu {
-  background: var(--c2);
+  background: var(--c3);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,11 +8,51 @@
   padding-right: 30px;
 }
 
+#main-menu .active span {
+  color: var(--accent);
+  text-decoration: underline;
+}
+#main-menu .active span:hover {
+  color: var(--text);
+}
+
+#main-menu .name {
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: var(--accent);
+  margin-left: 10px;
+}
+
+#main-menu span {
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+#main-menu .center span {
+  padding-right: 5px;
+  padding-left: 5px;
+  border-left: thin solid gray;
+}
+
+#main-menu .center .first {
+  border-left: none;
+}
+
+#main-menu span:hover {
+  color: var(--c1);
+  text-decoration: underline;
+}
+
 #main-menu .left {
   display: flex;
   align-items: center;
-  font-weight: 500;
   font-size: larger;
+}
+
+#main-menu .left img {
+  width: 45px;
+  height: auto;
 }
 
 #main-menu .center {
@@ -22,12 +62,6 @@
   justify-content: center;
 }
 
-#main-menu .center span {
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: var(--c3);
-}
-
 #main-menu .right {
   margin-left: auto;
 }
@@ -35,10 +69,4 @@
 #main-menu .right {
   text-align: right;
   cursor: pointer;
-}
-
-#main-menu span {
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: larger;
 }

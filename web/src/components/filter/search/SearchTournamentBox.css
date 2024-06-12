@@ -1,0 +1,36 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--c2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 3px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+.search-bar input {
+  font-size: 16px;
+  min-width: 300px;
+  background-color: var(--c2);
+  border: none;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-bar button {
+  padding: 8px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.search-bar input:focus {
+  border-color: var(--c3);
+}
+
+.search-bar button:hover {
+  color: var(--accent);
+}

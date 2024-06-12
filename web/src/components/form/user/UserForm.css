@@ -1,0 +1,20 @@
+.user-form {
+  width: 60%;
+  margin: auto;
+  margin-top: 3%;
+  padding: 10px;
+}
+
+.user-form form {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.user-form .nav {
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  margin-right: 15px;
+  margin-left: 15px;
+  text-align: center;
+}

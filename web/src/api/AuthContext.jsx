@@ -7,6 +7,33 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({ logged: false });
+  const sports = ['Football', 'Volleyball', 'Handball'];
+  const locations = [
+    'Buenos Aires',
+    'Capital Federal',
+    'Catamarca',
+    'Chaco',
+    'Chubut',
+    'Córdoba',
+    'Corrientes',
+    'Entre Ríos',
+    'Formosa',
+    'Jujuy',
+    'La Pampa',
+    'La Rioja',
+    'Mendoza',
+    'Misiones',
+    'Neuquen',
+    'Río Negro',
+    'Salta',
+    'San Juan',
+    'San Luís',
+    'Santa Cruz',
+    'Santa Fe',
+    'Santiago Del Estero',
+    'Tierra Del Fuego',
+    'Tucumán',
+  ];
   const [userLoad, setUserLoad] = useState(false);
   const [error, setError] = useState();
   const url = 'http://localhost:8001';
@@ -66,8 +93,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  const postLogin = (email, password, setSucces) => {
-    setSucces(false);
+  const postLogin = (email, password, navigate) => {
     setUserLoad(false);
     setError();
     axios
@@ -82,13 +108,10 @@ export const AuthProvider = ({ children }) => {
           id: data.id,
           name: data.name,
         });
+        setUserLoad(true);
       })
       .catch((error) => setError(error))
-      .finally(
-        () => setSucces(true),
-        setUserLoad(true),
-        (window.location.href = '/tournaments'),
-      );
+      .finally(() => navigate('/tournaments'));
   };
 
   const logOut = async () => {
@@ -101,14 +124,27 @@ export const AuthProvider = ({ children }) => {
     window.location.href = '/login';
   };
 
-  const postRegister = (email, password, username, setSucces) => {
-    setSucces(false);
+  const postRegister = (
+    email,
+    preferredSport,
+    location,
+    phone,
+    password,
+    username,
+    imageURL,
+    navigate,
+  ) => {
     setError();
+
     axios
       .post(url + '/register', {
         email,
+        preferredSport,
+        location,
+        phone,
         password,
         username,
+        imageURL,
       })
       .then((response) => {
         const token = response.headers.authorization;
@@ -120,10 +156,14 @@ export const AuthProvider = ({ children }) => {
           id: data.id,
           name: data.name,
         });
+        setUserLoad(true);
+        if (!imageURL || imageURL === '') {
+          imageURL =
+            'https://ohsobserver.com/wp-content/uploads/2022/12/Guest-user.png';
+        }
       })
       .catch((error) => setError(error))
-      .finally(() => setSucces(true), setUserLoad(true)),
-      (window.location.href = '/tournaments');
+      .finally(() => navigate('/tournaments'));
   };
 
   const getCurrentUser = () => {
@@ -143,16 +183,14 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setUserLoad(true));
   };
 
-  const getUser = (id, setUser, setSucces) => {
-    setSucces(false);
+  const getUser = (id, setUser) => {
     setError();
     axios
       .get(url + `/user/${id}`)
       .then((response) => {
         setUser(response.data);
       })
-      .catch((error) => setError(error))
-      .finally(() => setSucces(true));
+      .catch((error) => setError(error));
   };
 
   const postTornament = (
@@ -161,11 +199,17 @@ export const AuthProvider = ({ children }) => {
     date,
     teams,
     sport,
-    setTournament,
-    setSucces,
+    imageURL,
+    location,
+    privacy,
+    navigate,
   ) => {
-    setSucces(false);
+    var tournament;
     setError();
+    if (!imageURL || imageURL === '') {
+      imageURL =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGME2VivHFEZWJDwVWGUfxtjSGg78t58nNkx4Y3eBQUw&s';
+    }
     axios
       .post(url + '/tournament', {
         name,
@@ -173,13 +217,51 @@ export const AuthProvider = ({ children }) => {
         date,
         teams,
         sport,
+        imageURL,
+        location,
+        privacy,
       })
       .then((response) => {
-        const data = response.data;
-        setTournament(data);
+        tournament = response.data;
       })
       .catch((error) => setError(error))
-      .finally(() => setSucces(true));
+      .finally(() => navigate(`/tournament/${tournament.id}`));
+  };
+
+  const putTornament = (
+    name,
+    description,
+    date,
+    teams,
+    sport,
+    imageURL,
+    location,
+    privacy,
+    tournamentId,
+    setTournament,
+  ) => {
+    var tournament;
+    setError();
+    if (!imageURL || imageURL === '') {
+      imageURL =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGME2VivHFEZWJDwVWGUfxtjSGg78t58nNkx4Y3eBQUw&s';
+    }
+    axios
+      .put(url + `/tournament/${tournamentId}`, {
+        name,
+        description,
+        date,
+        teams,
+        sport,
+        imageURL,
+        location,
+        privacy,
+      })
+      .then((response) => {
+        tournament = response.data;
+      })
+      .catch((error) => setError(error))
+      .finally(() => setTournament(tournament));
   };
 
   const getTournament = (id, setTournament, setSucces) => {
@@ -194,23 +276,23 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setSucces(true));
   };
 
-  const postTornamentResult = (
+  const postGame = (
     tournamentId,
     team1,
+    score1,
     team2,
-    goals1,
-    goals2,
+    score2,
     setTournament,
     setSuccess,
   ) => {
     setSuccess(false);
     setError();
     axios
-      .post(url + `/tournament/${tournamentId}`, {
+      .post(url + `/tournament/${tournamentId}/games`, {
         team1,
+        score1,
         team2,
-        goals1,
-        goals2,
+        score2,
       })
       .then((response) => {
         setTournament(response.data);
@@ -219,19 +301,139 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setSuccess(true));
   };
 
+  const editGame = (
+    tournamentId,
+    gameId,
+    team1,
+    score1,
+    team2,
+    score2,
+    setTournament,
+    setSuccess,
+  ) => {
+    setSuccess(false);
+    setError();
+    axios
+      .put(url + `/tournament/${tournamentId}/games/${gameId}`, {
+        team1,
+        score1,
+        team2,
+        score2,
+      })
+      .then((response) => {
+        setTournament(response.data);
+      })
+      .catch((error) => setError(error))
+      .finally(() => setSuccess(true));
+  };
+
+  const closeTournament = (tournamentId, setTournament) => {
+    setError();
+    axios
+      .post(url + `/tournament/${tournamentId}/status`)
+      .then((response) => {
+        setTournament(response.data);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const getUserTournamentsSearch = (
+    userId,
+    sport,
+    location,
+    name,
+    setTournaments,
+  ) => {
+    setError();
+    axios
+      .get(
+        url +
+          `/user/${userId}/tournaments/search?sport=${sport}&location=${location}&name=${name}`,
+      )
+      .then((response) => {
+        setTournaments(response.data);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const getTournamentsSearch = (sport, location, name, setTournaments) => {
+    setError();
+    axios
+      .get(
+        url +
+          `/tournament/search?sport=${sport}&location=${location}&name=${name}`,
+      )
+      .then((response) => {
+        setTournaments(response.data);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const DeleteTournament = (tournamentId, navigate) => {
+    setError();
+    console.log(tournamentId);
+    axios
+      .delete(url + `/tournament/${tournamentId}`)
+      .then(navigate('/tournaments'))
+      .catch((error) => setError(error));
+  };
+
+  const getTournaments = (setTournament) => {
+    setError();
+    axios
+      .get(url + `/tournament`)
+      .then((response) => {
+        setTournament(response.data);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const getFeaturedTournaments = (setTournament) => {
+    setError();
+    axios
+      .get(url + `/tournament/featured`)
+      .then((response) => {
+        setTournament(response.data);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const getSportFeaturedTournaments = (setSport, setTournament) => {
+    setError();
+    var sport = sports[Math.floor(Math.random() * sports.length)];
+    axios
+      .get(url + `/tournament/featured/${sport}`)
+      .then((response) => {
+        setTournament(response.data);
+        setSport(sport);
+      })
+      .catch((error) => setError(error));
+  };
+
   return (
     <AuthContext.Provider
       value={{
         userInfo,
         userLoad,
+        sports,
+        locations,
         postLogin,
         logOut,
         postRegister,
         setError,
         getUser,
         postTornament,
+        putTornament,
         getTournament,
-        postTornamentResult,
+        postGame,
+        editGame,
+        getUserTournamentsSearch,
+        closeTournament,
+        DeleteTournament,
+        getTournaments,
+        getTournamentsSearch,
+        getFeaturedTournaments,
+        getSportFeaturedTournaments,
       }}
     >
       <ToastContainer />

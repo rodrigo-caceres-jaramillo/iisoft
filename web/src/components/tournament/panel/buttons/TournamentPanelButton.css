@@ -1,0 +1,28 @@
+.panel-button {
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.panel-button button {
+  background: var(--accent);
+  border-radius: 20px;
+  border-style: none;
+  box-sizing: border-box;
+  color: var(--text);
+  cursor: pointer;
+  width: 100%;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 10px 30px 10px 30px;
+  margin: auto;
+  text-align: center;
+}
+
+.panel-button .red {
+  background: red;
+}
+
+.panel-button :hover {
+  color: var(--c2);
+}

@@ -1,0 +1,36 @@
+#tournament-info {
+}
+
+#tournament-info .image {
+  background-color: var(--c2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#tournament-info .image img {
+  width: 100%;
+  height: 30%;
+}
+
+#tournament-info .info-header {
+  align-items: center;
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+}
+
+#tournament-info .info .name {
+  text-align: center;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 1.7em;
+  color: var(--text);
+}
+
+#tournament-info .info span {
+  color: var(--text2);
+  margin-left: 5px;
+  font-size: large;
+}

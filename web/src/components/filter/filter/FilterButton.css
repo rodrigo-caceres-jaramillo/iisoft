@@ -1,0 +1,37 @@
+.sport-filter {
+  width: 130px;
+  height: 40px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid;
+  border-color: var(--line);
+  border-radius: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sport-filter:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.sport-filter::after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.sport-filter option {
+  padding: 8px;
+}
+
+.sport-filter:focus {
+  border-color: var(--accent);
+}
+
+.sport-filter::after {
+  color: var(--accent);
+}

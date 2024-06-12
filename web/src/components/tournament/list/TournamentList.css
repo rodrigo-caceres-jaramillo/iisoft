@@ -1,4 +1,13 @@
 #tournament-list .grid {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+#tournament-list .not-found {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin: 50px;
 }

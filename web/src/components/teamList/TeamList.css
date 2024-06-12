@@ -1,0 +1,31 @@
+.team-list-container {
+  max-height: 45rem;
+  overflow-y: auto;
+}
+
+.team-list {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 400px;
+}
+
+.team-list thead th {
+  background-color: var(--accent);
+  color: #ffffff;
+  top: 0;
+  position: sticky;
+}
+
+.team-list th,
+.team-list td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.team-list tbody {
+  background-color: var(--c2);
+}
+
+.team-list tbody tr {
+  border-bottom: 1px solid var(--line);
+}

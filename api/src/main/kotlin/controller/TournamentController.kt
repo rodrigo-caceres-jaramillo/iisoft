@@ -41,12 +41,22 @@ class TournamentController(private var system: System, private var tokenControll
         }
     }
 
+    fun putTournament(context: Context){
+        tokenController.validateAndProcessBody<DraftTournament>(context) { draftTournament ->
+            try {
+                val tournamentID = context.pathParam("id")
+                val tournament = system.updateTournament(tournamentID, draftTournament)
+                context.json(TournamentDTO(tournament))
+
+            } catch (e: NotTournamentFoundException) {
+                tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "Tournament not found")
+            }
+        }
+    }
+
     fun deleteTournament(context: Context) {
         try{
             val id = context.pathParam("id")
-            if (id.toIntOrNull() == null){
-                throw BadRequestResponse()
-            }
             var userID = tokenController.tokenToUserId(context)
             system.removeTournament(id, userID)
         }catch (e : NotTournamentFoundException) {
@@ -56,18 +66,88 @@ class TournamentController(private var system: System, private var tokenControll
         }
     }
 
-    fun postTournamentResult(context: Context){
-        tokenController.validateAndProcessBody<DraftTournamentResult>(context) { tournamentResultREQ ->
+    fun closeGame(context: Context) {
+        try {
+            val id = context.pathParam("id")
+            var userID = tokenController.tokenToUserId(context)
+            val tournament = system.closeGame(id, userID)
+            context.json(TournamentDTO(tournament))
+            return
+        }catch (e : NotTournamentFoundException) {
+            tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "Tournament not found")
+        }catch (e : UserException) {
+            tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "Tournament not found")
+        }
+    }
+
+    fun postGame(context: Context){
+        tokenController.validateAndProcessBody<DraftGame>(context) { draftGame ->
             try {
-                val idTornament = context.pathParam("id")
-                val tournament = system.addTournamentResult(idTornament, tournamentResultREQ)
+                val idTournament = context.pathParam("id")
+                val tournament = system.addGame(idTournament, draftGame)
                 context.json(TournamentDTO(tournament))
 
-            } catch (e: NotTournamentFoundException) {
-                tokenController.errorResponse(context, HttpStatus.UNAUTHORIZED, "User unauthorized")
+            } catch (e: NotTeamFoundException) {
+                tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "Team not found")
             } catch (e: DuplicatedTeamException) {
                 tokenController.errorResponse(context, HttpStatus.UNPROCESSABLE_CONTENT, "Duplicated Team")
             }
         }
     }
+
+    fun putGame(context: Context){
+        tokenController.validateAndProcessBody<DraftGame>(context) { draftGame ->
+            try {
+                val tournamentID = context.pathParam("id")
+                val gameID = context.pathParam("gameId")
+                val tournament = system.updateGame(tournamentID, gameID.toInt(), draftGame)
+                context.json(TournamentDTO(tournament))
+
+            } catch (e: NotTeamFoundException) {
+                tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "Team not found")
+            } catch (e: DuplicatedTeamException) {
+                tokenController.errorResponse(context, HttpStatus.UNPROCESSABLE_CONTENT, "Duplicated Team")
+            }
+        }
+    }
+
+    fun getTournamentsSearch(context: Context) {
+        try {
+            var location = context.queryParam("location") ?: throw InvalidSportException()
+            var sport = context.queryParam("sport") ?: throw InvalidSportException()
+            var name = context.queryParam("name")
+            var results = system.searchTournaments(sport, location, name)
+            var tournamentsDTO = mutableListOf<TournamentDTO>()
+            for (tournament in results) {
+                var tournamentDTO = TournamentDTO(tournament)
+                tournamentsDTO.add(tournamentDTO)
+            }
+            context.json(tournamentsDTO)
+        }catch (e: InvalidSportException){
+            tokenController.errorResponse(context, HttpStatus.BAD_REQUEST, "Invalid sport")
+        }
+    }
+
+    fun getFeaturedTournaments(context: Context) {
+        var tournaments = system.getFeaturedTournaments()
+        var tournamentsDTO = mutableListOf<TournamentDTO>()
+        for(tournament in tournaments){
+            var tournamentDTO = TournamentDTO(tournament)
+            tournamentsDTO.add(tournamentDTO)
+        }
+        context.json(tournamentsDTO)
+    }
+
+    fun getFeaturedSportTournaments(context: Context) {
+        val sport = context.pathParam("sport")
+        var tournaments = system.getFeaturedSportTournaments(sport)
+        var tournamentsDTO = mutableListOf<TournamentDTO>()
+        for(tournament in tournaments){
+            var tournamentDTO = TournamentDTO(tournament)
+            tournamentsDTO.add(tournamentDTO)
+        }
+        context.json(tournamentsDTO)
+    }
+
+
 }

@@ -1,0 +1,13 @@
+.edit-tournament-button {
+  background-color: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-tournament-button:hover {
+  background-color: var(--c2);
+}

@@ -1,19 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import './SimpleTournament.css';
-import { SlCalender } from 'react-icons/sl';
+import { SlCalender, SlTrophy, SlLocationPin, SlLock } from 'react-icons/sl';
 import { FaCircle } from 'react-icons/fa6';
 
 const SimpleTournament = ({ tournament }) => {
   return (
     <div className="simple-tournament">
       <div className="image">
-        {tournament.image ? (
-          <img src={tournament.image}></img>
+        {tournament.imageURL ? (
+          <img src={tournament.imageURL}></img>
         ) : (
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGME2VivHFEZWJDwVWGUfxtjSGg78t58nNkx4Y3eBQUw&s"
-            alt="Tournament"
-          />
+          <span>Loading...</span>
         )}
       </div>
       <div className="content">
@@ -21,22 +18,33 @@ const SimpleTournament = ({ tournament }) => {
           <div className="info">
             <NavLink to={`/tournament/${tournament.id}`}>
               <span className="name">{tournament.name}</span>
+              {tournament.privacy == 'Private' ? <SlLock /> : null}
             </NavLink>
             <div>{tournament.description}</div>
-            <div className="date">
-              <SlCalender />
-              <span>{tournament.date}</span>
-              <div>
-                {tournament.status ? (
-                  <div className="status">
+            <div className="fotter">
+              <div className="section">
+                <SlCalender />
+                <span>{tournament.date}</span>
+              </div>
+              <div className="section">
+                <SlTrophy color="grey" />
+                <span>{tournament.sport}</span>
+              </div>
+              <div className="last">
+                <SlLocationPin color="grey" />
+                <span>{tournament.location}</span>
+              </div>
+              <div className="status">
+                {tournament.status === 'Open' ? (
+                  <>
                     <FaCircle color="green" />
                     <span>OPEN</span>
-                  </div>
+                  </>
                 ) : (
-                  <div className="status">
+                  <>
                     <FaCircle color="red" />
                     <span>CLOSED</span>
-                  </div>
+                  </>
                 )}
               </div>
             </div>

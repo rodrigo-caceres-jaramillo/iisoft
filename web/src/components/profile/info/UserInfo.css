@@ -1,0 +1,47 @@
+.user-info {
+  display: flex;
+  height: 100px;
+  gap: 10px;
+}
+
+.user-info .image-container {
+  background-color: var(--c3);
+  height: 100px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.user-info img {
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+.user-info .username {
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 2rem;
+  color: var(--text);
+}
+
+.user-info .section-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.user-info .contacts {
+  border: solid thin var(--line);
+  border-radius: 5px;
+  background-color: var(--c2);
+  padding: 5px;
+  align-content: center;
+}
+.user-info .sector {
+  font-size: 1.1rem;
+}
+
+.user-info .sector span {
+  margin-left: 5px;
+}

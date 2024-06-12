@@ -1,0 +1,52 @@
+.simple-game {
+  display: flex;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line);
+}
+
+.simple-game .game {
+  background-color: var(--c2);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  width: 100%;
+}
+
+.simple-game .team {
+  display: flex;
+  align-items: center;
+}
+
+.simple-game .team-name {
+  font-size: larger;
+}
+
+.simple-game .score-box {
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.simple-game button {
+  background-color: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  margin-left: 5px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.simple-game button:hover {
+  background-color: var(--c2);
+}

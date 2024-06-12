@@ -1,23 +1,23 @@
 .simple-tournament {
   background-color: var(--c2);
-  border: 3px solid var(--c3);
+  border: 2px solid var(--accent);
   border-radius: 10px;
-  margin: 5px;
   padding: 3px;
   display: flex;
-  height: 110px;
+  min-height: 120px;
   position: relative;
 }
 
 .simple-tournament .image {
   flex: 0 0 auto;
+  margin: 1px;
 }
 
 .simple-tournament .image img {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8%;
+  border-radius: 10px;
 }
 
 .simple-tournament .content {
@@ -31,6 +31,10 @@
 .simple-tournament .content .name {
   font-weight: 600;
   font-size: 1.7em;
+  margin-right: 5px;
+}
+.simple-tournament .content .name:hover {
+  color: var(--accent);
 }
 
 .simple-tournament .content .info {
@@ -41,12 +45,25 @@
   position: relative;
 }
 
-.simple-tournament .content .date {
+.simple-tournament .content .fotter {
   color: gray;
   margin-top: auto;
+  display: flex;
+  text-align: center;
 }
 
-.simple-tournament .content .date span {
+.simple-tournament .content .fotter .section {
+  padding-right: 5px;
+  padding-left: 5px;
+  border-right: thin solid gray;
+}
+
+.simple-tournament .content .fotter .last {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.simple-tournament .content .fotter span {
   margin-left: 5px;
 }
 

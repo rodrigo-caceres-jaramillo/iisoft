@@ -1,5 +1,6 @@
 package controller
 
+import dto.TournamentDTO
 import dto.UserDTO
 import io.javalin.http.*
 import model.*
@@ -58,5 +59,23 @@ class UserController(private var system: System, private var tokenController: To
         }
     }
 
-
+    fun getUserTournamentsSearch(context: Context) {
+        try {
+            val userId = context.pathParam("id")
+            var location = context.queryParam("location") ?: throw InvalidSportException()
+            var sport = context.queryParam("sport") ?: throw InvalidSportException()
+            var name = context.queryParam("name")
+            var results = system.searchTournamentsOfUser(userId, sport, location, name)
+            var tournamentsDTO = mutableListOf<TournamentDTO>()
+            for (tournament in results) {
+                var tournamentDTO = TournamentDTO(tournament)
+                tournamentsDTO.add(tournamentDTO)
+            }
+            context.json(tournamentsDTO)
+        }catch (e: UserNotFoundException){
+            tokenController.errorResponse(context, HttpStatus.NOT_FOUND, "User not found")
+        }catch (e: InvalidSportException){
+            tokenController.errorResponse(context, HttpStatus.BAD_REQUEST, "Invalid sport")
+        }
+    }
 }

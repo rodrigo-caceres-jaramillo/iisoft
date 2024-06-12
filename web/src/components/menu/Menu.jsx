@@ -10,22 +10,36 @@ const Menu = () => {
     <header id="main-menu">
       <NavLink to="/">
         <div className="left">
-          <span></span>
+          <img src="https://cdn-icons-png.freepik.com/512/7953/7953066.png"></img>
+          <div className="name">WHISTLE</div>
         </div>
       </NavLink>
       <div className="center">
-        <NavLink to="/tournaments">
-          <span>WHISTLE</span>
+        <NavLink to="/">
+          <span className="first">HOME</span>
         </NavLink>
+        <NavLink to="/search">
+          <span>SEARCH</span>
+        </NavLink>
+        {userInfo.logged && (
+          <>
+            <NavLink to="/tournaments">
+              <span>MY TOURNAMENTS</span>
+            </NavLink>
+            <NavLink to="/profile">
+              <span>PROFILE</span>
+            </NavLink>
+          </>
+        )}
       </div>
       <div className="right">
         {userInfo.logged ? (
           <a onClick={() => logOut()}>
-            <span>Log Out</span>
+            <span>LOG OUT</span>
           </a>
         ) : (
           <NavLink to="/login">
-            <span>Log In</span>
+            <span>LOG IN</span>
           </NavLink>
         )}
       </div>
